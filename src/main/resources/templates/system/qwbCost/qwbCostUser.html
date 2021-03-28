@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('費用列表')" />
+</head>
+
+
+<!--=================用户的缴费管理视图============================-->
+<body class="gray-bg">
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+<!--th:value="${session.user.loginName}"     此处是实现用户登录查看自己的缴费页面只能显示出自己的缴费信息-->
+								<input hidden type="text" name="name" th:value="${session.user.userName}"/>
+							</li>
+
+<!--后期文字处理的好看点-->
+<li>交费已成功， 请查看详情或者导出账单</li>
+
+
+							<!--<li>
+								发布时间：<input type="text" name="createDate"/>
+							</li>
+
+							<li>
+								电费：<input type="text" name="electricityCosts"/>
+							</li>
+
+							<li>
+								水费：<input type="text" name="waterCosts"/>
+							</li>
+
+							<li>
+								燃气费：<input type="text" name="gasCosts"/>
+							</li>
+
+							<li>
+								物业费：<input type="text" name="propertyCosts"/>
+							</li>
+
+							<li>
+								缴费时间：<input type="text" name="paymentTime"/>
+							</li>
+
+							<li>
+								状态：<input type="text" name="state"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>-->
+<!--==============显示已缴费=========================-->
+							<input type="text" name="state" hidden="hidden" value="1"/>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<!--<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:qwbCost:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:qwbCost:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>-->
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:qwbCost:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a href="/invoice_print" target="_blank" class="btn btn-primary">
+				<i class="fa fa-print"></i> 打印发票
+			</a>
+
+<!--=====此处的导出模块不给用=================================-->
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:qwbCost:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:qwbCost:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:qwbCost:remove')}]];
+        var prefix = ctx + "system/qwbCost";
+
+
+		/**
+		 * 展示数据
+		 */
+		$(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "費用",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '',
+					visible: false
+				},
+				{
+					field : 'name', 
+					title : '姓名',
+					sortable: true
+				},
+/////////////////////////////////////////
+					{
+						field : 'room',
+						title : '房间号',
+						sortable: true
+					},
+///////////////////////////////////////
+				{
+					field : 'createDate', 
+					title : '发布时间',
+					sortable: true
+				},
+				{
+					field : 'electricityCosts', 
+					title : '电费',
+					sortable: true
+				},
+				{
+					field : 'waterCosts', 
+					title : '水费',
+					sortable: true
+				},
+				{
+					field : 'gasCosts', 
+					title : '燃气费',
+					sortable: true
+				},
+				{
+					field : 'propertyCosts', 
+					title : '物业费',
+					sortable: true
+				},
+					{
+						field : 'total',
+						title : '总计',
+						sortable: true
+					},
+				{
+					field : 'paymentTime', 
+					title : '缴费时间',
+					sortable: true
+				},
+				{
+					// field : 'state',
+					title : '状态',
+					sortable: true,
+					formatter: function(value, row, index) {
+						var actions = [];
+						if(row.state==0)
+						{
+							actions.push('未交费');
+						}
+							else{
+							actions.push('已交费');
+						}
+
+						return actions.join('');
+					}
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+		            	actions.push('<a href="/invoice_print?id=' + row.id + '" target="_blank" class="btn btn-primary btn-xs"><i class="fa fa-print"></i> 发票 </a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+		            }
+		        }]
+            };
+
+/////////初始化+搜索/////////////////////////////////////
+            $.table.init(options);
+			$.table.search();
+        });
+
+
+		////////////下面的是页面的自动刷新/////////////////////////////
+		$(function () {
+			setInterval("refresh()",3000);
+		})
+		function  refresh() {
+
+			$("#bootstrap-table").bootstrapTable('refresh');
+			console.log("aa")
+		}
+		/////////////////////////////////////////
+    </script>
+</body>
+</html>

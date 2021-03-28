@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>居民小区服务系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FreeHTML5.co" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+        <link th:href="@{/articleImport/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/articleImport/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+        <!-- Toastr style -->
+        <link th:href="@{/articleImport/css/plugins/toastr/toastr.min.css}" rel="stylesheet">
+
+        <link th:href="@{/articleImport/css/animate.css}" rel="stylesheet">
+        <link th:href="@{/articleImport/css/style.css}" rel="stylesheet">
+
+
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" th:href="@{/client/css/animate.css}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" th:href="@{/client/css/icomoon.css}">
+	<!-- Themify Icons-->
+	<link rel="stylesheet" th:href="@{/client/css/themify-icons.css}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" th:href="@{/client/css/bootstrap.css}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" th:href="@{/client/css/magnific-popup.css}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" th:href="@{/client/css/bootstrap-datepicker.min.css}">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" th:href="@{/client/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/client/css/owl.theme.default.min.css}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" th:href="@{/client/css/style.css}">
+
+	<!-- Modernizr JS -->
+	<script th:src="@{/client/js/modernizr-2.6.2.min.js}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script th:src="@{/client/js/respond.min.js}"></script>
+	<![endif]-->
+
+<style>
+img{
+width: auto;
+height: auto;
+max-width: 100%;
+max-height: 100%; 
+}
+</style>
+
+
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+
+	
+	<!-- <div class="page-inner"> -->
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			
+			<div class="row">
+				<div class="col-sm-4 col-xs-12">
+					<div id="gtco-logo"><a href="/index1">黄山小区</a></div>
+				</div>
+				<div class="col-xs-8 text-right menu-1">
+					<ul>
+						<!--<li><a href="destination.html">Destination</a></li>-->
+						<li><a href="/index1">小区主页</a></li>
+						<li class="has-dropdown">
+							<a href="/communityInformation">小区简介</a>
+							<!--<ul class="dropdown">
+								<li><a href="#">Europe</a></li>
+								<li><a href="#">Asia</a></li>
+								<li><a href="#">America</a></li>
+								<li><a href="#">Canada</a></li>
+							</ul>-->
+						</li>
+
+						<li><a href="/noticeUser">公告通知</a></li>
+						<li><a href="/houseRent">租房信息</a></li>
+						<li><a href="/login">登录</a></li>
+					</ul>	
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+	<!--<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style=" background-image: url(images/img_bg_2.jpg)">-->
+	<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:80px">
+		<div class="overlay" ></div>
+		<div class="gtco-container">
+			
+			
+			
+
+			
+		</div>
+	</header>
+	
+	
+	<div id="myCarousel" class="carousel slide"  >			
+				<!-- 轮播（Carousel）指标 -->
+				<ol class="carousel-indicators">
+					<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+					<li data-target="#myCarousel" data-slide-to="1"></li>
+					<li data-target="#myCarousel" data-slide-to="2"></li>
+				</ol>   
+				<!-- 轮播（Carousel）项目 -->
+				<div class="carousel-inner"   style="height:300px" >
+					<div class="item active">
+<!--<img th:src="@{/img/1556198193.png}">	-->
+						<img th:src="@{/img/1.jpg}" alt="First slide" style="
+float: left;						
+width: auto;
+height: auto;
+max-width: 50%;
+max-height: 100%; ">	
+<img th:src="@{/img/2.jpg}" alt="First slide" style="
+    float: right;
+width: auto;
+height: auto;
+max-width: 50%;
+max-height: 100%; ">				
+					</div>
+
+					<div class="item">
+						<img th:src="@{/img/3.jpg}" alt="Second slide" >
+
+					</div>
+					<div class="item" >
+						<img th:src="@{/img/5.jpg}" alt="Third slide" style="
+float: left;						
+width: auto;
+height: auto;
+max-width: 50%;
+max-height: 100%; ">
+						<img th:src="@{/img/6.jpg}" alt="First slide" style="
+    float: right;
+width: auto;
+height: auto;
+max-width: 50%;
+max-height: 100%; ">
+					</div>
+				</div>
+				<!-- 轮播（Carousel）导航 -->
+				<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+					<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+					<span class="sr-only">Previous</span>
+				</a>
+				<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+					<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+					<span class="sr-only">Next</span>
+				</a>
+</div> 
+	
+	
+	<div class="gtco-section">
+		<div class="gtco-container">
+			<div class="row">
+				<!--<div class="col-md-8 col-md-offset-2 text-center gtco-heading">-->
+				<div style="text-align: center">
+					<h1>您们生活的舒适就是对我们最大的肯定</h1>
+					<!--<p>风景图</p>-->
+				</div>
+			</div>
+			
+<!--小区图片展示	-->		
+			<div class="row">
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/17.jpg}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/17.jpg}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<!--<h2>丰富的社区文化活动</h2>-->
+							<!--<p>丰富的社区文化活动</p>-->
+							<p><span class="btn btn-primary">小区楼盘</span></p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/13.jpg}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/13.jpg}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<!--<h2>八卦早知道</h2>-->
+							<!--<p>选择了我们就选择了希望</p>-->
+							<p><span class="btn btn-primary">新闻中心</span></p>
+						</div>
+					</a>
+				</div>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/11.png}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/11.png}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<!--<h2>身体是革命的本钱</h2>-->
+							<!--<p>选择了我们就选择了希望</p>-->
+							<p><span class="btn btn-primary">健康娱乐</span></p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/14.jpg}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/14.jpg}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<!--<h2>丰富的社区文化活动</h2>-->
+							<!--<p>丰富的社区文化活动</p>-->
+							<p><span class="btn btn-primary">小区绿化</span></p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/15.jpg}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/15.jpg}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+							<!--<h2>丰富的社区文化活动</h2>-->
+							<!--<p>丰富的社区文化活动</p>-->
+							<p><span class="btn btn-primary">基础设施</span></p>
+						</div>
+					</a>
+				</div>
+
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					<a th:href="@{/img/16.jpg}" class="fh5co-card-item image-popup">
+						<figure style="height: 190px">
+							<div class="overlay"><i class="ti-plus"></i></div>
+							<img th:src="@{/img/16.jpg}" alt="Image" class="img-responsive">
+						</figure>
+						<div class="fh5co-text">
+
+							<p><span class="btn btn-primary">文化生活</span></p>
+						</div>
+					</a>
+				</div>
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<footer id="gtco-footer" role="contentinfo" style="height:80px">
+		<div class="gtco-container">
+			<div class="row row-p	b-md">
+
+				<!--<div class="col-md-4">
+					<div class="gtco-widget">
+						<h3>关于我们</h3>
+						<p>加个超链接</p>
+					</div>
+				</div>-->
+
+				<div class="col-md-4 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>地址:河南省油田黄山小区</h3>
+						<h3>邮编:473405</h3>
+						<h3>关于我们</h3>
+					</div>
+				</div>
+
+
+
+				<div class="col-md-8 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>联系我们</h3>
+						<ul class="gtco-quick-contact">
+							<li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> 2625289151@qq.com</a></li>
+							<li><a href="#"><i class="fa fa-qq"></i> 3152768907</a></li>
+							<li><a href="#"><i class="fa fa-weixin"></i>  二维码</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+
+
+		</div>
+	</footer>
+	<!-- </div> -->
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+
+
+
+    <script th:src="@{/articleImport/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/articleImport/js/bootstrap.min.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/articleImport/js/inspinia.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/pace/pace.min.js}"></script>
+
+
+	
+	<!-- jQuery -->
+	<script th:src="@{/client/js/jquery.min.js}"></script>
+	<!-- jQuery Easing -->
+	<script th:src="@{/client/js/jquery.easing.1.3.js}"></script>
+	<!-- Bootstrap -->
+	<script th:src="@{/client/js/bootstrap.min.js}"></script>
+	<!-- Waypoints -->
+	<script th:src="@{/client/js/jquery.waypoints.min.js}"></script>
+	<!-- Carousel -->
+	<script th:src="@{/client/js/owl.carousel.min.js}"></script>
+	<!-- countTo -->
+	<script th:src="@{/client/js/jquery.countTo.js}"></script>
+
+	<!-- Stellar Parallax -->
+	<script th:src="@{/client/js/jquery.stellar.min.js}"></script>
+
+	<!-- Magnific Popup -->
+	<script th:src="@{/client/js/jquery.magnific-popup.min.js}"></script>
+	<script th:src="@{/client/js/magnific-popup-options.js}"></script>
+	
+	<!-- Datepicker -->
+	<script th:src="@{/client/js/bootstrap-datepicker.min.js}"></script>
+	
+
+	<!-- Main -->
+	<script th:src="@{/client/js/main.js}"></script>
+
+	</body>
+</html>
+

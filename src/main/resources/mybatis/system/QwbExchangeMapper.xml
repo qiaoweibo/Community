@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qwb.community.project.system.qwbExchange.mapper.QwbExchangeMapper">
+    
+    <resultMap type="QwbExchange" id="QwbExchangeResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="creationTime"    column="creation_time"    />
+        <result property="content"    column="content"    />
+        <result property="state"    column="state"    />
+    </resultMap>
+	
+	<sql id="selectQwbExchangeVo">
+        select id, name, creation_time, content, state from qwb_exchange
+    </sql>
+	
+    <select id="selectQwbExchangeList" parameterType="QwbExchange" resultMap="QwbExchangeResult">
+        <include refid="selectQwbExchangeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="creationTime != null  and creationTime != '' "> and creation_time = #{creationTime}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="state != null "> and state = #{state}</if>
+         </where>
+    </select>
+    
+    <select id="selectQwbExchangeById" parameterType="Integer" resultMap="QwbExchangeResult">
+        <include refid="selectQwbExchangeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQwbExchange" parameterType="QwbExchange" useGeneratedKeys="true" keyProperty="id">
+        insert into qwb_exchange
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="creationTime != null  and creationTime != ''  ">creation_time,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="state != null  ">state,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="creationTime != null  and creationTime != ''  ">#{creationTime},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="state != null  ">#{state},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateQwbExchange" parameterType="QwbExchange">
+        update qwb_exchange
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="creationTime != null  and creationTime != ''  ">creation_time = #{creationTime},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="state != null  ">state = #{state},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteQwbExchangeById" parameterType="Integer">
+        delete from qwb_exchange where id = #{id}
+    </delete>
+	
+    <delete id="deleteQwbExchangeByIds" parameterType="String">
+        delete from qwb_exchange where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

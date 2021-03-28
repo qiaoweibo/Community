@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('车位申请列表')" />
+	<!--目前是前台住户和后台住户共用一张车位申请表(注意后期的一些特殊操作,一些服务人员和前台住户的权限操作)-->
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								申请人姓名：<input type="text" name="name"/>
+							</li>
+
+							<!--<li>
+								申请人的电话号码：<input type="text" name="phone"/>
+							</li>
+
+							<li>
+								申请时间：<input type="text" name="applyTime"/>
+							</li>
+							-->
+							<li>
+								状态：<input type="text" name="state"/>
+							</li>
+
+							<!--<li>
+								批准时间：<input type="text" name="agreeTime"/>
+							</li>
+
+							<li>
+								车位id（用于关联操作）：<input type="text" name="cId"/>
+							</li>-->
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:qwbCarList:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:qwbCarList:edit">
+					<i class="fa fa-edit"></i> 批准
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:qwbCarList:remove">
+					<i class="fa fa-remove"></i> 驳回
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:qwbCarList:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:qwbCarList:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:qwbCarList:remove')}]];
+
+		/*var prefix = ctx + "system/qwbCarList";这个操作是用来指定路径的*/
+        var prefix = ctx + "system/qwbCarList";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+                modalName: "车位申请",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '',
+					visible: false
+				},
+					{
+						// field : 'name',
+						title : '车位号',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							actions.push(row.qwbCarRent.carId);
+							return actions.join('');
+						}
+					},
+
+					{
+						// field : 'name',
+						title : '位置',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							actions.push(row.qwbCarRent.space);
+							return actions.join('');
+						}
+					},
+
+					{
+						// field : 'name',
+						title : '面积',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							actions.push(row.qwbCarRent.area);
+							return actions.join('');
+						}
+					},
+					{
+						// field : 'name',
+						title : '租金(年)',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							actions.push(row.qwbCarRent.rentMoney);
+							return actions.join('');
+						}
+					},
+
+				{
+					field : 'name', 
+					title : '申请人',
+					sortable: true
+				},
+					{
+						field : 'room',
+						title : '房间号',
+						sortable: true
+					},
+					{
+						field : 'rentTime',
+						title : '租期',
+						sortable: true
+					},
+				{
+					field : 'phone', 
+					title : '申请人的电话号码',
+					sortable: true
+				},
+				{
+					field : 'applyTime', 
+					title : '申请时间',
+					sortable: true
+				},
+
+					{
+						field : 'agreeName',
+						title : '审核人',
+						sortable: true
+					},
+					{
+						field : 'agreeTime',
+						title : '审核时间',
+						sortable: true
+					},
+
+
+					{
+						// field : 'name',
+						title : '描述',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							if(row.qwbCarRent.describe==0)
+							{
+								actions.push('未租用');
+							}
+							else if(row.qwbCarRent.describe==1)
+							{
+								actions.push('已租用');
+							}
+							else {
+								actions.push('续租');
+							}
+/*actions.push(row.qwbCarRent.describe); 这个操作是输出describe中的值 */
+							return actions.join('');
+						}
+					},
+
+
+				{
+					//field : 'state',
+					title : '状态',
+					/*sortable: true*/
+					sortable: true,
+					formatter: function(value, row, index) {
+						var actions = [];
+						if(row.state==0||row.state==null)
+						{
+							actions.push('未审核');
+						}
+						else{
+							actions.push('已审核');
+						}
+
+						return actions.join('');
+					}
+				},
+				/*{
+					field : 'agreeTime', 
+					title : '批准时间',
+					sortable: true
+				},*/
+				{
+					field : 'cId', 
+					title : '车位id（用于关联操作）',
+					/*sortable: true*/
+					visible: false
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+						if(row.state==0||row.state==null)
+						{
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>审核</a> ');
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						}
+						/*actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>审核</a> ');
+						actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');*/
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

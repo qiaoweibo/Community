@@ -1,0 +1,332 @@
+<!DOCTYPE HTML>
+
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>居民小区服务系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Free HTML5 Website Template by FreeHTML5.co" />
+	<meta name="keywords" content="free website templates, free html5, free template, free bootstrap, free website template, html5, css3, mobile first, responsive" />
+	<meta name="author" content="FreeHTML5.co" />
+
+  	<!-- Facebook and Twitter integration -->
+	<meta property="og:title" content=""/>
+	<meta property="og:image" content=""/>
+	<meta property="og:url" content=""/>
+	<meta property="og:site_name" content=""/>
+	<meta property="og:description" content=""/>
+	<meta name="twitter:title" content="" />
+	<meta name="twitter:image" content="" />
+	<meta name="twitter:url" content="" />
+	<meta name="twitter:card" content="" />
+
+		<link th:href="@{/articleImport/css/bootstrap.min.css}" rel="stylesheet">
+		<link th:href="@{/articleImport/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+		<!-- Toastr style -->
+		<link th:href="@{/articleImport/css/plugins/toastr/toastr.min.css}" rel="stylesheet">
+
+		<link th:href="@{/articleImport/css/animate.css}" rel="stylesheet">
+		<link th:href="@{/articleImport/css/style.css}" rel="stylesheet">
+
+
+	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+	
+	<!-- Animate.css -->
+	<link rel="stylesheet" th:href="@{/client/css/animate.css}">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" th:href="@{/client/css/icomoon.css}">
+	<!-- Themify Icons-->
+	<link rel="stylesheet" th:href="@{/client/css/themify-icons.css}">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" th:href="@{/client/css/bootstrap.css}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" th:href="@{/client/css/magnific-popup.css}">
+
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" th:href="@{/client/css/bootstrap-datepicker.min.css}">
+
+	<!-- Owl Carousel  -->
+	<link rel="stylesheet" th:href="@{/client/css/owl.carousel.min.css}">
+	<link rel="stylesheet" th:href="@{/client/css/owl.theme.default.min.css}">
+
+	<!-- Theme style  -->
+	<link rel="stylesheet" th:href="@{/client/css/style.css}">
+
+	<!-- Modernizr JS -->
+	<script th:src="@{/client/js/modernizr-2.6.2.min.js}"></script>
+	<!-- FOR IE9 below -->
+	<!--[if lt IE 9]>
+	<script th:src="@{/client/js/respond.min.js}"></script>
+	<![endif]-->
+
+
+<!--??????????	-->
+		<th:block th:include="include :: header('費用列表')" />
+<style>
+img{
+width: auto;
+height: auto;
+max-width: 100%;
+max-height: 100%; 
+}
+</style>
+
+
+	</head>
+	<body>
+		
+	<div class="gtco-loader"></div>
+	
+	<div id="page">
+
+	
+	<!-- <div class="page-inner"> -->
+	<nav class="gtco-nav" role="navigation">
+		<div class="gtco-container">
+			
+			<div class="row">
+				<div class="col-sm-4 col-xs-12">
+					<div id="gtco-logo"><a href="/index1">黄山小区</a></div>
+				</div>
+				<div class="col-xs-8 text-right menu-1">
+					<ul>
+						<!--<li><a href="destination.html">Destination</a></li>-->
+						<li><a href="/index1">小区主页</a></li>
+						<li class="has-dropdown">
+							<a href="/communityInformation">小区简介</a>
+							<!--<ul class="dropdown">
+								<li><a href="#">Europe</a></li>
+								<li><a href="#">Asia</a></li>
+								<li><a href="#">America</a></li>
+								<li><a href="#">Canada</a></li>
+							</ul>-->
+						</li>
+
+						<li><a href="/noticeUser">公告通知</a></li>
+						<li><a href="/houseRent">租房信息</a></li>
+						<li><a href="/login">登录</a></li>
+					</ul>	
+				</div>
+			</div>
+			
+		</div>
+	</nav>
+	<!--<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style=" background-image: url(images/img_bg_2.jpg)">-->
+	<header id="gtco-header" class="gtco-cover gtco-cover-md" role="banner" style="height:80px">
+		<div class="overlay" ></div>
+		<div class="gtco-container">
+
+		</div>
+	</header>
+	<div style="text-align: center">
+		<h1 >这里是房屋出租页面</h1>
+	</div>
+	
+
+
+
+<!--表单打印	-->
+<!--		<div class="tab-content ">-->
+<!--			<div id="tab-1" class="tab-pane active " >-->
+<!--				<div class="full-height-scroll">-->
+<!--					<div class="table-responsive">-->
+<!--						<table class="table table-striped table-hover " style="width: 80%;text-align: center;margin:0 auto-->
+<!--" >-->
+
+<!--							<thead>-->
+<!--							<tr id="bold" bordercolor="add8e6" bgcolor="#add8e6">-->
+<!--								<td >租房信息</td>-->
+<!--								<td >户型</td>-->
+<!--								<td >发布人</td>-->
+<!--								<td >发布时间</td>-->
+<!--								<td >电话</td>-->
+<!--								<td >邮箱</td>-->
+<!--								&lt;!&ndash;注意下面页面的跳转是通过传id的方式实现的(加入了<a></a>标签实现id的传入)&ndash;&gt;-->
+<!--								&lt;!&ndash;<td >操作</td>&ndash;&gt;-->
+<!--							</tr></thead>-->
+<!--							<tbody >-->
+<!--							<tr th:each="prod : ${qwbHouseRent}">-->
+<!--								<td th:text="${prod.content}"></td>-->
+<!--								<td th:text="${prod.roomType}"></td>-->
+<!--								<td th:text="${prod.name}"></td>-->
+<!--								&lt;!&ndash;下面是将时间有英文格式转换成正常格式&ndash;&gt;-->
+<!--								<td th:text="${#dates.format(prod.time,'yyyy-MM-dd HH:mm:ss')}"></td>-->
+<!--								&lt;!&ndash;th:value="${#dates.format(tbUserSubscribe.createTime,'yyyy-MM-dd HH:mm:ss')}"&ndash;&gt;-->
+
+<!--								<td th:text="${prod.phone}"></td>-->
+<!--								<td th:text="${prod.email}"></td>-->
+
+<!--								&lt;!&ndash;注意下面页面的跳转是通过传id的方式实现的(加入了<a></a>标签实现id的传入)-->
+<!--								<td class="client-status"><a th:href="${'/article?id='+prod.noticeId}"><span class="label label-primary">查看详情</span></a></td>&ndash;&gt;-->
+<!--							</tr>-->
+
+
+<!--							</tbody>-->
+<!--						</table>-->
+<!--					</div>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+		<!--??????????	-->
+		<div class="col-sm-8 col-sm-offset-2  table-striped">
+			<table id="bootstrap-table" data-mobile-responsive="true"></table>
+		</div>
+
+
+	<footer id="gtco-footer" role="contentinfo" style="height:80px">
+		<div class="gtco-container">
+			<div class="row row-p	b-md">
+
+
+				<div class="col-md-4 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>地址:河南省油田黄山小区</h3>
+						<h3>邮编:473405</h3>
+						<h3>关于我们</h3>
+
+					</div>
+				</div>
+
+
+
+				<div class="col-md-8 col-md-push-1">
+					<div class="gtco-widget">
+						<h3>联系我们</h3>
+						<ul class="gtco-quick-contact">
+							<li><a href="#"><i class="icon-phone"></i> +1 234 567 890</a></li>
+							<li><a href="#"><i class="icon-mail2"></i> 2625289151@qq.com</a></li>
+							<li><a href="#"><i class="fa fa-qq"></i> 3152768907</a></li>
+							<li><a href="#"><i class="fa fa-weixin"></i>  二维码</span></a></li>
+						</ul>
+					</div>
+				</div>
+
+			</div>
+
+
+
+		</div>
+	</footer>
+	<!-- </div> -->
+
+	</div>
+
+	<div class="gototop js-top">
+		<a href="#" class="js-gotop"><i class="icon-arrow-up"></i></a>
+	</div>
+	<!--??????????	-->
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- bootstrap-table 表格插件 -->
+	<script th:src="@{/ajax/libs/bootstrap-table/bootstrap-table.min.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/locale/bootstrap-table-zh-CN.min.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/mobile/bootstrap-table-mobile.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.min.js}"></script>
+	<script th:src="@{/ajax/libs/bootstrap-table/extensions/columns/bootstrap-table-fixed-columns.js}"></script>
+	<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+	<script th:src="@{/ajax/libs/iCheck/icheck.min.js}"></script>
+	<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+	<script th:src="@{/ajax/libs/layui/layui.js}"></script>
+	<script th:src="@{/ruoyi/js/common.js?v=3.3.0}"></script>
+
+	<!-- jQuery -->
+<!--	<script th:src="@{/client/js/jquery.min.js}"></script>-->
+	<!-- jQuery Easing -->
+	<script th:src="@{/client/js/jquery.easing.1.3.js}"></script>
+	<!-- Bootstrap -->
+<!--	<script th:src="@{/client/js/bootstrap.min.js}"></script>-->
+	<!-- Waypoints -->
+	<script th:src="@{/client/js/jquery.waypoints.min.js}"></script>
+	<!-- Carousel -->
+	<script th:src="@{/client/js/owl.carousel.min.js}"></script>
+	<!-- countTo -->
+	<script th:src="@{/client/js/jquery.countTo.js}"></script>
+
+	<!-- Stellar Parallax -->
+	<script th:src="@{/client/js/jquery.stellar.min.js}"></script>
+
+	<!-- Magnific Popup -->
+	<script th:src="@{/client/js/jquery.magnific-popup.min.js}"></script>
+	<script th:src="@{/client/js/magnific-popup-options.js}"></script>
+	
+	<!-- Datepicker -->
+	<script th:src="@{/client/js/bootstrap-datepicker.min.js}"></script>
+	
+
+	<!-- Main -->
+	<script th:src="@{/client/js/main.js}"></script>
+	<script th:src="@{/ruoyi/js/ry-ui.js?v=3.3.0}"></script>
+	</body>
+<script type="text/javascript">
+	$(function() {
+		var options = {
+			url: "/houseRentList",
+			showRefresh: false,
+			showColumns: false,
+			showToggle: false,
+			showSearch: false,
+			columns: [
+			// 		{
+			// 	checkbox: true
+			// },
+				// {
+				// 	field : 'id',
+				// 	title : '',
+				// 	visible: false
+				// },content
+				{
+					field : 'content',
+					title : '租房信息',
+					sortable: true
+				},
+				{
+					field : 'roomType',
+					title : '户型',
+					sortable: true
+				},
+				{
+					field : 'name',
+					title : '发布人',
+					sortable: true
+				},
+				{
+					field : 'time',
+					title : '发布时间',
+					sortable: true
+				},
+				{
+					field : 'phone',
+					title : '电话',
+					sortable: true
+				},
+				{
+					field : 'email',
+					title : '邮箱',
+					sortable: true
+				}/*,
+				{
+					title: '操作',
+					align: 'center',
+					formatter: function(value, row, index) {
+						var actions = [];
+						/!*
+                        暂时先屏蔽掉，如果有时间可以再加一个页面，目前是edit.html只能让前台住户使用，add.html只能让服务人员使用
+                                                actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        *!/
+						actions.push('<a class="btn btn-success btn-xs " href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>修改</a> ');
+						actions.push('<a class="btn btn-danger btn-xs " href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						return actions.join('');
+					}
+				}*/
+			]
+		};
+		$.table.init(options);
+		///////////////////////////////////////////////
+		// $.table.search()
+	});
+</script>
+</html>
+

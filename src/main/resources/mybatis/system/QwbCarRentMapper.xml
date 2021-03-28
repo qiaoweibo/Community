@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qwb.community.project.system.qwbCarRent.mapper.QwbCarRentMapper">
+    
+    <resultMap type="QwbCarRent" id="QwbCarRentResult">
+        <result property="id"    column="id"    />
+        <result property="carId"    column="carId"    />
+        <result property="space"    column="space"    />
+        <result property="length"    column="length"    />
+        <result property="width"    column="width"    />
+        <result property="area"    column="area"    />
+        <result property="ageLimit"    column="ageLimit"    />
+        <result property="rentMoney"    column="rentMoney"    />
+        <result property="publishId"    column="publishId"    />
+        <result property="pName"    column="pName"    />
+        <result property="pNumber"    column="pNumber"    />
+        <result property="pTime"    column="pTime"    />
+        <result property="state"    column="state"    />
+
+        <result property="describe"    column="describe"    />
+    </resultMap>
+
+
+<!--如果遇到变蓝问题，就加上 “ `` ”   着两个符号(见下两行)-->
+	<sql id="selectQwbCarRentVo">
+        select id, carId, space, length, width, area, ageLimit, rentMoney, publishId, pName, pNumber, pTime, state , `describe` from qwb_car_rent
+    </sql>
+	
+    <select id="selectQwbCarRentList" parameterType="QwbCarRent" resultMap="QwbCarRentResult">
+        <include refid="selectQwbCarRentVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="carId != null "> and carId = #{carId}</if>
+             <if test="space != null  and space != '' "> and space = #{space}</if>
+             <if test="length != null "> and length = #{length}</if>
+             <if test="width != null "> and width = #{width}</if>
+             <if test="area != null "> and area = #{area}</if>
+             <if test="ageLimit != null "> and ageLimit = #{ageLimit}</if>
+             <if test="rentMoney != null "> and rentMoney = #{rentMoney}</if>
+             <if test="publishId != null "> and publishId = #{publishId}</if>
+             <if test="pName != null  and pName != '' "> and pName = #{pName}</if>
+             <if test="pNumber != null  and pNumber != '' "> and pNumber = #{pNumber}</if>
+             <if test="pTime != null "> and pTime = #{pTime}</if>
+
+            <if test="describe != null "> and `describe` = #{describe}</if>
+
+         </where>
+    </select>
+    
+    <select id="selectQwbCarRentById" parameterType="Integer" resultMap="QwbCarRentResult">
+        <include refid="selectQwbCarRentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQwbCarRent" parameterType="QwbCarRent" useGeneratedKeys="true" keyProperty="id">
+        insert into qwb_car_rent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">id,</if>
+			<if test="carId != null  ">carId,</if>
+			<if test="space != null  and space != ''  ">space,</if>
+			<if test="length != null  ">length,</if>
+			<if test="width != null  ">width,</if>
+			<if test="area != null  ">area,</if>
+			<if test="ageLimit != null  ">ageLimit,</if>
+			<if test="rentMoney != null  ">rentMoney,</if>
+			<if test="publishId != null  ">publishId,</if>
+			<if test="pName != null  and pName != ''  ">pName,</if>
+			<if test="pNumber != null  and pNumber != ''  ">pNumber,</if>
+			<if test="pTime != null  ">pTime,</if>
+			<if test="state != null  ">state,</if>
+
+            <if test="describe != null  ">describe,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null  ">#{id},</if>
+			<if test="carId != null  ">#{carId},</if>
+			<if test="space != null  and space != ''  ">#{space},</if>
+			<if test="length != null  ">#{length},</if>
+			<if test="width != null  ">#{width},</if>
+			<if test="area != null  ">#{area},</if>
+			<if test="ageLimit != null  ">#{ageLimit},</if>
+			<if test="rentMoney != null  ">#{rentMoney},</if>
+			<if test="publishId != null  ">#{publishId},</if>
+			<if test="pName != null  and pName != ''  ">#{pName},</if>
+			<if test="pNumber != null  and pNumber != ''  ">#{pNumber},</if>
+			<if test="pTime != null  ">#{pTime},</if>
+			<if test="state != null  ">#{state},</if>
+
+            <if test="describe != null  ">#{describe},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateQwbCarRent" parameterType="QwbCarRent">
+        update qwb_car_rent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="carId != null  ">carId = #{carId},</if>
+            <if test="space != null  and space != ''  ">space = #{space},</if>
+            <if test="length != null  ">length = #{length},</if>
+            <if test="width != null  ">width = #{width},</if>
+            <if test="area != null  ">area = #{area},</if>
+            <if test="ageLimit != null  ">ageLimit = #{ageLimit},</if>
+            <if test="rentMoney != null  ">rentMoney = #{rentMoney},</if>
+            <if test="publishId != null  ">publishId = #{publishId},</if>
+            <if test="pName != null  and pName != ''  ">pName = #{pName},</if>
+            <if test="pNumber != null  and pNumber != ''  ">pNumber = #{pNumber},</if>
+            <if test="pTime != null  ">pTime = #{pTime},</if>
+            <if test="state != null  ">state = #{state},</if>
+
+            <if test="describe != null  ">`describe` = #{describe},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteQwbCarRentById" parameterType="Integer">
+        delete from qwb_car_rent where id = #{id}
+    </delete>
+	
+    <delete id="deleteQwbCarRentByIds" parameterType="String">
+        delete from qwb_car_rent where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

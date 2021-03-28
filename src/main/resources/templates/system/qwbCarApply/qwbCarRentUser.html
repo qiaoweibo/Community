@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('车位列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+						<!--	<li>
+								车位号：<input type="text" name="carId"/>
+							</li>
+
+							<li>
+								位置：<input type="text" name="space"/>
+							</li>
+
+							<li>
+								车位长度：<input type="text" name="length"/>
+							</li>
+
+							<li>
+								车位宽度：<input type="text" name="width"/>
+							</li>
+
+							<li>
+								面积：<input type="text" name="area"/>
+							</li>
+
+							<li>
+								车位租用的最大年限(年)：<input type="text" name="ageLimit"/>
+							</li>
+
+							<li>
+								租金（年）：<input type="text" name="rentMoney"/>
+							</li>
+
+							<li>
+								发布人的id：<input type="text" name="publishId"/>
+							</li>
+
+							<li>
+								发布人姓名：<input type="text" name="pName"/>
+							</li>
+
+							<li>
+								发布人的电话号码：<input type="text" name="pNumber"/>
+							</li>
+
+							<li>
+								发布时间：<input type="text" name="pTime"/>
+							</li>
+-->
+							<li>
+								状态：<input type="text" placeholder="0:未申请,1:已申请" name="state"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <!--<div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:qwbCarApplyList:add">
+					<i class="fa fa-plus"></i> 添加
+				</a>
+				<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:qwbCarApplyList:edit">
+					<i class="fa fa-edit"></i> 修改
+				</a>
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:qwbCarApplyList:remove">
+					<i class="fa fa-remove"></i> 删除
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:qwbCarApplyList:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+			</div>-->
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:qwbCarApplyList:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:qwbCarApplyList:remove')}]];
+        var prefix = ctx + "system/qwbCarApplyList";
+
+        $(function() {
+            var options = {
+				/*url: prefix + "/Carlist"用于展示车位信息*/
+                url: prefix + "/Carlist",
+                createUrl: prefix + "/add",
+                /*updateUrl: prefix + "/edit/{id}",*/
+               /* removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",*/
+                modalName: "车位",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '',
+					visible: false
+				},
+				{
+					field : 'carId', 
+					title : '车位号',
+					sortable: true
+				},
+				{
+					field : 'space',
+					title : '位置',
+					sortable: true
+				},
+				{
+					field : 'length', 
+					title : '车位长度',
+					sortable: true
+				},
+				{
+					field : 'width', 
+					title : '车位宽度',
+					sortable: true
+				},
+				{
+					field : 'area', 
+					title : '面积',
+					sortable: true
+				},
+				{
+					field : 'ageLimit', 
+					title : '车位租用的最大年限(年)',
+					sortable: true
+				},
+				{
+					field : 'rentMoney', 
+					title : '租金（年）',
+					sortable: true
+				},
+				/*{
+					field : 'publishId', 
+					title : '发布人的id',
+					sortable: true
+				},*/
+				{
+					field : 'pname',
+					title : '发布人姓名',
+					sortable: true
+				},
+				{
+					field : 'pnumber',
+					title : '发布人的电话号码',
+					sortable: true
+				},
+				{
+					field : 'ptime',
+					title : '发布时间',
+					sortable: true
+				},
+
+					{
+						//field : 'describe',
+						title : '描述',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							if(row.describe==0)
+							{
+								actions.push('未租用');
+							}
+							else if(row.describe==1){
+								actions.push('已租用');
+							}
+							else{
+								actions.push('续租');
+							}
+							return actions.join('');
+						}
+					},
+
+				{
+					//field : 'state',
+					title : '状态：',
+					sortable: true,
+					formatter: function(value, row, index) {
+						var actions = [];
+						if(row.state==0)
+						{
+							actions.push('未申请');
+						}
+						else{
+							actions.push('已申请');
+						}
+
+						return actions.join('');
+					}
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+/*下面的申请是经过处理过的*/
+/*一会价格判断，如果是已申请则可以删除(不用了可以直接在车位申请列表删除即可)*/
+/*但是要价另外一个判断：就是在车位申请中删除记录后，
+	在车位列表中的  已申请  就会变成  未申请*/
+						if(row.state==0)
+						{
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0);" onclick="CarRent(\'/system/qwbCarApplyList/add?id=' + row.id + '\',\' 申请\');"><i class="fa fa-edit"></i>申请</a> ');
+						}
+/*此处本来应该找一个类似桂电多人选课时用于抽签的算法，实现在多人同时申请一个车位时的随机抽取
+但是由于时间不够，算法不太会，暂时搁浅
+目前只能暂时采用先来先服务的思路,先申请的有饭吃*/
+		            	/*actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0);" onclick="CarRent(\'/system/qwbCarApplyList/add?id=' + row.id + '\',\' 申请\');"><i class="fa fa-edit"></i>申请</a> ');*/
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+
+
+        //跳转
+		function CarRent(dictId, name) {
+			createMenuItem(dictId, name);
+		}
+
+	</script>
+</body>
+</html>

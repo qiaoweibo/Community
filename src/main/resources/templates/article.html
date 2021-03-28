@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<!--=========================下面这一行也是新增加的====================================-->
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>公告详情</title>
+
+    <link th:href="@{/articleImport/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/articleImport/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <!-- Toastr style -->
+    <link th:href="@{/articleImport/css/plugins/toastr/toastr.min.css}" rel="stylesheet">
+
+    <link th:href="@{/articleImport/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/articleImport/css/style.css}" rel="stylesheet">
+
+
+
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+
+
+       <!-- <div id="page-wrapper" class="gray-bg">-->
+
+            <!--<div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>文章</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">主页</a>
+                        </li>
+                        <li>
+                            <a>应用</a>
+                        </li>
+                        <li class="active">
+                            <strong>文章</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-lg-2">
+
+                </div>
+            </div>-->
+
+        <div class="wrapper wrapper-content  animated fadeInRight article">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <div class="ibox">
+                        <div class="ibox-content">
+                            <div class="pull-right">
+                                <button class="btn btn-white btn-xs" type="button">类型:[[${notice.noticeType.equals('1')?'通知':'公告'}]]</button>
+                                <button class="btn btn-white btn-xs" type="button">发布人：[[${notice.createBy}]]</button>
+
+                            </div>
+                            <div class="text-center article-title">
+                               <!-- th:value="${#dates.format(tbUserSubscribe.createTime,'yyyy-MM-dd HH:mm:ss')}-->
+                            <span class="text-muted"><i class="fa fa-clock-o"></i>  [[${#dates.format(notice.createTime,'yyyy-MM-dd HH:mm:ss')}]]</span>
+                                <h1>
+                                   [[${notice.noticeTitle}]]
+                                </h1>
+                            </div>
+
+                            <p id="contentId">
+
+                            </p>
+
+                            <p id="fileUploadId" >
+
+                            </p>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        </div>
+    </div>
+
+
+
+    <!-- Mainly scripts -->
+    <script th:src="@{/articleImport/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/articleImport/js/bootstrap.min.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/articleImport/js/inspinia.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/pace/pace.min.js}"></script>
+
+<!--=========================================================================================-->
+<script th:inline="javascript">
+  var content=  [[${notice.noticeContent}]];
+
+/*下面这条语句是为了打印出 content中的值 */
+console.log(content)
+
+    $(function () {
+        $("#contentId").append(content)
+    })
+
+
+
+
+
+  var content2=  [[${notice.fileUpload}]];
+  arr=content2.split("/")[content2.split("/").length-1];
+
+
+
+  /*下面这条语句是为了打印出 content中的值 */
+  console.log(content2)
+
+  $(function () {
+  var tem="<a class='btn btn-success btn-sm' href='"+content2+"'  title='下载'  >下载："+arr+"</a>"
+      $("#fileUploadId").append(tem)
+  })
+</script>
+
+</body>
+
+</html>

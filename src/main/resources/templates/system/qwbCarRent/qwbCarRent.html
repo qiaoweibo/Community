@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+	<th:block th:include="include :: header('车位列表')" />
+
+	<!--服务人员的车位发布视图-->
+
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+		<div class="row">
+			<div class="col-sm-12 search-collapse">
+				<form id="formId">
+					<div class="select-list">
+						<ul>
+							<li>
+								车位号：<input type="text" name="carId"/>
+							</li>
+
+							<li>
+								位置：<input type="text" name="space"/>
+							</li>
+
+							<!--<li>
+								车位长度：<input type="text" name="length"/>
+							</li>
+
+							<li>
+								车位宽度：<input type="text" name="width"/>
+							</li>
+
+							<li>
+								面积：<input type="text" name="area"/>
+							</li>
+
+							<li>
+								车位租用的最大年限(年)：<input type="text" name="ageLimit"/>
+							</li>
+
+							<li>
+								租金（年）：<input type="text" name="rentMoney"/>
+							</li>
+
+							<li>
+								发布人的id：<input type="text" name="publishId"/>
+							</li>
+
+							<li>
+								发布人姓名：<input type="text" name="pName"/>
+							</li>
+
+							<li>
+								发布人的电话号码：<input type="text" name="pNumber"/>
+							</li>
+							-->
+							<!--<li>
+								发布时间：<input type="text" name="pTime"/>
+							</li>-->
+
+							<li>
+								状态：<input type="text" name="state" placeholder="0:未申请,1:已申请"/>
+							</li>
+
+							<li>
+								<a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+								<a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</div>
+			
+	        <div class="btn-group-sm" id="toolbar" role="group">
+				<a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:qwbCarRent:add">
+					<i class="fa fa-plus"></i> 发布车位信息
+				</a>
+				<!--<a class="btn btn-primary btn-edit disabled" onclick="$.operate.edit()" shiro:hasPermission="system:qwbCarRent:edit">
+					<i class="fa fa-edit"></i> 修改车位信息
+				</a>-->
+				<a class="btn btn-danger btn-del btn-del disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:qwbCarRent:remove">
+					<i class="fa fa-remove"></i> 删除车位信息
+				</a>
+				<a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:qwbCarRent:export">
+						<i class="fa fa-download"></i> 导出
+				 </a>
+				<a class="btn btn-info" onclick="$.table.importExcel()" shiro:hasPermission="system:user:import">
+					<i class="fa fa-upload"></i> 导入可用车位
+				</a>
+			</div>
+			<div class="col-sm-12 select-table table-striped">
+				<table id="bootstrap-table" data-mobile-responsive="true"></table>
+			</div>
+		</div>
+	</div>
+    <div th:include="include :: footer"></div>
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:qwbCarRent:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:qwbCarRent:remove')}]];
+        var prefix = ctx + "system/qwbCarRent";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+				exportUrl: prefix + "/export",
+/////////////////////////////
+				importUrl: prefix + "/importData",
+				importTemplateUrl: prefix + "/importTemplate",
+///////////////////////////////////////
+                modalName: "车位",
+		        showExport: true,
+                columns: [{
+		            checkbox: true
+		        },
+				{
+					field : 'id', 
+					title : '',
+					visible: false
+				},
+				{
+					field : 'carId', 
+					title : '车位号',
+					sortable: true
+				},
+				{
+					field : 'space', 
+					title : '位置',
+					sortable: true
+				},
+				{
+					field : 'length', 
+					title : '车位长度',
+					sortable: true
+				},
+				{
+					field : 'width', 
+					title : '车位宽度',
+					sortable: true
+				},
+				{
+					field : 'area', 
+					title : '面积',
+					sortable: true
+				},
+				{
+					field : 'ageLimit', 
+					title : '车位租用的最大年限(年)',
+					sortable: true
+				},
+				{
+					field : 'rentMoney', 
+					title : '租金（年）',
+					sortable: true
+				},
+				/*{
+					field : 'publishId', 
+					title : '发布人的id',
+					sortable: true
+				},*/
+				{
+					field : 'pname',
+					title : '发布人',
+					sortable: true
+				},
+				{
+					field : 'pnumber',
+					title : '发布人的电话号码',
+					sortable: true
+				},
+				{
+					field : 'ptime',
+					title : '发布时间',
+					sortable: true
+				},
+
+					{
+						//field : 'describe',
+						title : '描述',
+						sortable: true,
+						formatter: function(value, row, index) {
+							var actions = [];
+							if(row.describe==0)
+							{
+								actions.push('未租用');
+							}
+							else if(row.describe==1){
+								actions.push('已租用');
+							}
+							else{
+								actions.push('续租');
+							}
+							return actions.join('');
+						}
+					},
+
+				{
+					//field : 'state',
+					title : '状态：',
+					sortable: true,
+					formatter: function(value, row, index) {
+						var actions = [];
+						if(row.state==0)
+						{
+							actions.push('未申请');
+						}
+						else{
+							actions.push('已申请');
+						}
+
+						return actions.join('');
+					}
+				},
+		        {
+		            title: '操作',
+		            align: 'center',
+		            formatter: function(value, row, index) {
+		            	var actions = [];
+/*若用户没有申请，则可以编辑，若用户有申请，则不可以编辑*/
+						if(row.state==0)
+						{
+							actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>修改</a> ');
+/*如果用户已经申请了，则在发布车位页面不能删除用户的已申请记录，只能在申请列表中删除*/
+							actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');
+						}
+		            	/*actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="#" onclick="$.operate.edit(\'' + row.id + '\')"><i class="fa fa-edit"></i>编辑</a> ');*/
+                        /*actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="#" onclick="$.operate.remove(\'' + row.id + '\')"><i class="fa fa-remove"></i>删除</a>');*/
+						return actions.join('');
+		            }
+		        }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+
+<!--/////////////////////////////////////////////////////////-->
+<form id="importForm" enctype="multipart/form-data" class="mt20 mb10" style="display: none;">
+	<div class="col-xs-offset-1">
+		<input type="file" id="file" name="file"/>
+		<div class="mt10 pt5">
+			<input type="checkbox" id="updateSupport" name="updateSupport" title="如果登录账户已经存在，更新这条数据。"> 是否更新已经存在的用户数据
+			&nbsp;	<a onclick="$.table.importTemplate()" class="btn btn-default btn-xs"><i class="fa fa-file-excel-o"></i> 下载模板</a>
+		</div>
+		<font color="red" class="pull-left mt10">
+			提示：仅允许导入“xls”或“xlsx”格式文件！
+		</font>
+	</div>
+</form>
+
+</html>

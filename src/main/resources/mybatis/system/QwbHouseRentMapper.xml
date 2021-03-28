@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qwb.community.project.system.qwbHouseRent.mapper.QwbHouseRentMapper">
+    
+    <resultMap type="QwbHouseRent" id="QwbHouseRentResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="content"    column="content"    />
+        <result property="time"    column="time"    />
+        <result property="remark"    column="remark"    />
+        <result property="phone"    column="phone"    />
+        <result property="email"    column="email"    />
+        <result property="roomType"    column="roomType"    />
+    </resultMap>
+	
+	<sql id="selectQwbHouseRentVo">
+        select id, name, content, time, remark, phone, email, roomType from qwb_house_rent
+    </sql>
+	
+    <select id="selectQwbHouseRentList" parameterType="QwbHouseRent" resultMap="QwbHouseRentResult">
+        <include refid="selectQwbHouseRentVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+             <if test="name != null  and name != '' "> and name = #{name}</if>
+             <if test="content != null  and content != '' "> and content = #{content}</if>
+             <if test="time != null "> and time = #{time}</if>
+             <if test="remark != null  and remark != '' "> and remark = #{remark}</if>
+             <if test="phone != null  and phone != '' "> and phone = #{phone}</if>
+             <if test="email != null  and email != '' "> and email = #{email}</if>
+             <if test="roomType != null  and roomType != '' "> and roomType = #{roomType}</if>
+         </where>
+    </select>
+    
+    <select id="selectQwbHouseRentById" parameterType="Integer" resultMap="QwbHouseRentResult">
+        <include refid="selectQwbHouseRentVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertQwbHouseRent" parameterType="QwbHouseRent" useGeneratedKeys="true" keyProperty="id">
+        insert into qwb_house_rent
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">name,</if>
+			<if test="content != null  and content != ''  ">content,</if>
+			<if test="time != null  ">time,</if>
+			<if test="remark != null  and remark != ''  ">remark,</if>
+			<if test="phone != null  and phone != ''  ">phone,</if>
+			<if test="email != null  and email != ''  ">email,</if>
+			<if test="roomType != null  and roomType != ''  ">roomType,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="name != null  and name != ''  ">#{name},</if>
+			<if test="content != null  and content != ''  ">#{content},</if>
+			<if test="time != null  ">#{time},</if>
+			<if test="remark != null  and remark != ''  ">#{remark},</if>
+			<if test="phone != null  and phone != ''  ">#{phone},</if>
+			<if test="email != null  and email != ''  ">#{email},</if>
+			<if test="roomType != null  and roomType != ''  ">#{roomType},</if>
+         </trim>
+    </insert>
+	 
+    <update id="updateQwbHouseRent" parameterType="QwbHouseRent">
+        update qwb_house_rent
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null  and name != ''  ">name = #{name},</if>
+            <if test="content != null  and content != ''  ">content = #{content},</if>
+            <if test="time != null  ">time = #{time},</if>
+            <if test="remark != null  and remark != ''  ">remark = #{remark},</if>
+            <if test="phone != null  and phone != ''  ">phone = #{phone},</if>
+            <if test="email != null  and email != ''  ">email = #{email},</if>
+            <if test="roomType != null  and roomType != ''  ">roomType = #{roomType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+	<delete id="deleteQwbHouseRentById" parameterType="Integer">
+        delete from qwb_house_rent where id = #{id}
+    </delete>
+	
+    <delete id="deleteQwbHouseRentByIds" parameterType="String">
+        delete from qwb_house_rent where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+    
+</mapper>

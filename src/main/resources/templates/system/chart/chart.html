@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+<head>
+    <th:block th:include="include :: header('費用列表')" />
+</head>
+
+<body class="gray-bg">
+
+<div th:include="include :: footer"></div>
+
+<div class="wrapper wrapper-content animated fadeInRight" style="margin-bottom: 100px;">
+    <div class="row">
+<!--下面这个div是第一个饼状图 -->
+        <div class="col-sm-12" >
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <!--<h5>六级</h5>-->
+                    <button onclick="my_print();" class="btn btn-primary">打印</button>
+                </div>
+                <div class="ibox-content" style="text-align: center">
+                    <div id="first" class="ct-perfect-fourth" style="width: 103%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+
+<!--下面这个div是第二个饼状图 -->
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                   <!-- <h5>六级</h5>-->
+
+                    <!--<button onclick="my_print();" class="btn btn-success">打印</button>-->
+                </div>
+                <div class="ibox-content">
+                    <!--<div id="two" class="ct-perfect-fourth" style="width: 100%;height:400px;"></div>-->
+                    <div id="two" class="ct-perfect-fourth" style="width: 103%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+<!--下面这个div是第三个饼状图 -->
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <!-- <h5>六级</h5>-->
+
+
+                   <!-- <button onclick="my_print();" class="btn btn-success">打印</button>-->
+                </div>
+                <div class="ibox-content">
+                    <div id="three" class="ct-perfect-fourth" style="width: 103%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--下面这个div是第四个饼状图 -->
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <!-- <h5>六级</h5>-->
+
+
+                    <!--<button onclick="my_print();" class="btn btn-success">打印</button>-->
+                </div>
+                <div class="ibox-content">
+                    <div id="four" class="ct-perfect-fourth" style="width: 103%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!--下面这个div是第五个饼状图 -->
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <!-- <h5>六级</h5>-->
+
+
+                   <!-- <button onclick="my_print();" class="btn btn-success">打印</button>-->
+                </div>
+                <div class="ibox-content">
+                    <div id="five" class="ct-perfect-fourth" style="width: 103%;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--startprint-->
+<img src="test.jpg" style="height: auto;width:100%;display: none;" id="showImg"/>
+<img src="test.jpg" style="height: auto;width:100%;display: none;" id="showImgTwo"/>
+<img src="test.jpg" style="height: auto;width:100%;display: none;" id="showImgThree"/>
+<img src="test.jpg" style="height: auto;width:100%;display: none;" id="showImgFour"/>
+<img src="test.jpg" style="height: auto;width:100%;display: none;" id="showImgFive"/>
+<!--endprint-->
+<script th:src="@{/js/echarts.min.js}"></script>
+
+<script type="text/javascript">
+
+
+
+</script>
+</body>
+
+<script type="text/javascript">
+    var data1 = []
+    option1 = {
+        title : {
+            text: '电费(共计:XX元)',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom'
+            /* ,
+            data:['未交电费','已交电费']*/
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'半径模式',
+
+                type:'pie',
+                radius : [20, 110],
+                center : ['25%', '50%'],
+                roseType : 'radius',
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // shadowBlur:3,
+                        // shadowOffsetX: 2,
+                        // shadowOffsetY: 2,
+                        // shadowColor: '#999',
+                        // padding: [0, 7],
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            // abg: {
+                            //     backgroundColor: '#333',
+                            //     width: '100%',
+                            //     align: 'right',
+                            //     height: 22,
+                            //     borderRadius: [4, 4, 0, 0]
+                            // },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    },
+                    /* normal: {
+                         show: false
+                     }*/
+                    emphasis: {
+                        show: true
+                    }
+                },
+                lableLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'}
+
+                ]
+
+            }
+            ,
+            {
+                name:'面积模式',
+                type:'pie',
+                radius : [30, 110],
+                center : ['75%', '50%'],
+                roseType : 'area',
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'},
+
+                ]
+            }
+
+        ]
+    };
+////////////////////////
+    var myChart = echarts.init(document.getElementById('first'));
+    /*var myChartTwo = echarts.init(document.getElementById('two'));*/
+    $(function () {
+
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : "/system/chart/getl",
+            async:false,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(dataRESULT) {
+                data1=dataRESULT;
+                var total=0;
+                for(var i=0;i<dataRESULT.length;i++){
+                  total+=dataRESULT[i].value;
+                }
+                option1.title.text="电费总计:"+total+"元";
+                option1.series[0].data=data1;
+                option1.series[1].data=data1;
+            }
+        });
+        myChart.setOption(option1);
+        myChart.resize();
+       /* myChartTwo.setOption(option);
+        myChartTwo.resize();*/
+    })
+
+</script>
+
+
+
+<script type="text/javascript">
+    var data2 = []
+    option2 = {
+        title : {
+            text: '水费(共计:XX元)',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom'
+            /* ,
+             data:['未交水费','已交水费']*/
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'半径模式',
+
+                type:'pie',
+                radius : [20, 110],
+                center : ['25%', '50%'],
+                roseType : 'radius',
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // shadowBlur:3,
+                        // shadowOffsetX: 2,
+                        // shadowOffsetY: 2,
+                        // shadowColor: '#999',
+                        // padding: [0, 7],
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            // abg: {
+                            //     backgroundColor: '#333',
+                            //     width: '100%',
+                            //     align: 'right',
+                            //     height: 22,
+                            //     borderRadius: [4, 4, 0, 0]
+                            // },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    },
+                    /* normal: {
+                         show: false
+                     }*/
+                    emphasis: {
+                        show: true
+                    }
+                },
+                lableLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'}
+
+                ]
+
+            }
+            ,
+            {
+                name:'面积模式',
+                type:'pie',
+                radius : [30, 110],
+                center : ['75%', '50%'],
+                roseType : 'area',
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'},
+
+                ]
+            }
+
+        ]
+    };
+    ////////////////////////
+    /*var myChart = echarts.init(document.getElementById('first'));*/
+    var myChartTwo = echarts.init(document.getElementById('two'));
+    $(function () {
+
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : "/system/chart/get2",
+            async:false,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(dataRESULT) {
+                data2=dataRESULT;
+                var total=0;
+                for(var i=0;i<dataRESULT.length;i++){
+                    total+=dataRESULT[i].value;
+                }
+                option2.title.text="水费总计:"+total+"元";
+                option2.series[0].data=data2;
+                option2.series[1].data=data2;
+            }
+        });
+       /* myChart.setOption(option);
+        myChart.resize();*/
+         myChartTwo.setOption(option2);
+         myChartTwo.resize();
+    })
+
+</script>
+
+
+
+<script type="text/javascript">
+    var data3 = []
+    option3 = {
+        title : {
+            text: '燃气费(共计:XX元)',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom'
+            /*,
+            data:['未交水费','已交水费']*/
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'半径模式',
+
+                type:'pie',
+                radius : [20, 110],
+                center : ['25%', '50%'],
+                roseType : 'radius',
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // shadowBlur:3,
+                        // shadowOffsetX: 2,
+                        // shadowOffsetY: 2,
+                        // shadowColor: '#999',
+                        // padding: [0, 7],
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            // abg: {
+                            //     backgroundColor: '#333',
+                            //     width: '100%',
+                            //     align: 'right',
+                            //     height: 22,
+                            //     borderRadius: [4, 4, 0, 0]
+                            // },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    },
+                    /* normal: {
+                         show: false
+                     }*/
+                    emphasis: {
+                        show: true
+                    }
+                },
+                lableLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:10, name:'已交燃气费'},
+                    {value:5, name:'未交燃气费'}
+
+                ]
+
+            }
+            ,
+            {
+                name:'面积模式',
+                type:'pie',
+                radius : [30, 110],
+                center : ['75%', '50%'],
+                roseType : 'area',
+                data:[
+                    {value:10, name:'已交燃气费'},
+                    {value:5, name:'未交燃气费'},
+
+                ]
+            }
+
+        ]
+    };
+    ////////////////////////
+    /*var myChart = echarts.init(document.getElementById('first'));*/
+    var myChartThree = echarts.init(document.getElementById('three'));
+    $(function () {
+
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : "/system/chart/get3",
+            async:false,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(dataRESULT) {
+                data3=dataRESULT;
+                var total=0;
+                for(var i=0;i<dataRESULT.length;i++){
+                    total+=dataRESULT[i].value;
+                }
+                option3.title.text="燃气费总计:"+total+"元";
+                option3.series[0].data=data3;
+                option3.series[1].data=data3;
+            }
+        });
+        /* myChart.setOption(option);
+         myChart.resize();*/
+        myChartThree.setOption(option3);
+        myChartThree.resize();
+    })
+
+</script>
+
+
+
+<script type="text/javascript">
+    var data4 = []
+    option4 = {
+        title : {
+            text: '物业费(共计:XX元)',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom'
+            /* ,
+            data:['未交电费','已交电费']*/
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+            {
+                name:'半径模式',
+
+                type:'pie',
+                radius : [20, 110],
+                center : ['25%', '50%'],
+                roseType : 'radius',
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // shadowBlur:3,
+                        // shadowOffsetX: 2,
+                        // shadowOffsetY: 2,
+                        // shadowColor: '#999',
+                        // padding: [0, 7],
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            // abg: {
+                            //     backgroundColor: '#333',
+                            //     width: '100%',
+                            //     align: 'right',
+                            //     height: 22,
+                            //     borderRadius: [4, 4, 0, 0]
+                            // },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    },
+                    /* normal: {
+                         show: false
+                     }*/
+                    emphasis: {
+                        show: true
+                    }
+                },
+                lableLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'}
+
+                ]
+
+            }
+            ,
+            {
+                name:'面积模式',
+                type:'pie',
+                radius : [30, 110],
+                center : ['75%', '50%'],
+                roseType : 'area',
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'},
+
+                ]
+            }
+
+        ]
+    };
+    ////////////////////////
+    var myChartfour = echarts.init(document.getElementById('four'));
+    /*var myChartTwo = echarts.init(document.getElementById('two'));*/
+    $(function () {
+
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : "/system/chart/get4",
+            async:false,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(dataRESULT) {
+                data4=dataRESULT;
+                var total=0;
+                for(var i=0;i<dataRESULT.length;i++){
+                    total+=dataRESULT[i].value;
+                }
+                option4.title.text="物业费总计:"+total+"元";
+                option4.series[0].data=data4;
+                option4.series[1].data=data4;
+            }
+        });
+        myChartfour.setOption(option4);
+        myChartfour.resize();
+        /* myChartTwo.setOption(option);
+         myChartTwo.resize();*/
+    })
+
+</script>
+
+
+
+
+<script type="text/javascript">
+    var data5 = []
+    option5 = {
+        title : {
+            text: '费用(共计:XX元)',
+            x:'center'
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            x : 'center',
+            y : 'bottom'
+            /* ,
+            data:['未交电费','已交电费']*/
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                mark : {show: true},
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel']
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        calculable : true,
+        series : [
+
+            {
+                name:'面积模式',
+                type:'pie',
+                radius : [30, 110],
+                center : ['75%', '50%'],
+                roseType : 'area',
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'},
+
+                ]
+            },
+            {
+                name:'半径模式',
+
+                type:'pie',
+                radius : [20, 110],
+                center : ['25%', '50%'],
+                roseType : 'radius',
+                label: {
+                    normal: {
+                        formatter: '{a|{a}}{abg|}\n{hr|}\n  {b|{b}：}{c}  {per|{d}%}  ',
+                        backgroundColor: '#eee',
+                        borderColor: '#aaa',
+                        borderWidth: 1,
+                        borderRadius: 4,
+                        // shadowBlur:3,
+                        // shadowOffsetX: 2,
+                        // shadowOffsetY: 2,
+                        // shadowColor: '#999',
+                        // padding: [0, 7],
+                        rich: {
+                            a: {
+                                color: '#999',
+                                lineHeight: 22,
+                                align: 'center'
+                            },
+                            // abg: {
+                            //     backgroundColor: '#333',
+                            //     width: '100%',
+                            //     align: 'right',
+                            //     height: 22,
+                            //     borderRadius: [4, 4, 0, 0]
+                            // },
+                            hr: {
+                                borderColor: '#aaa',
+                                width: '100%',
+                                borderWidth: 0.5,
+                                height: 0
+                            },
+                            b: {
+                                fontSize: 16,
+                                lineHeight: 33
+                            },
+                            per: {
+                                color: '#eee',
+                                backgroundColor: '#334455',
+                                padding: [2, 4],
+                                borderRadius: 2
+                            }
+                        }
+                    },
+                    /* normal: {
+                         show: false
+                     }*/
+                    emphasis: {
+                        show: true
+                    }
+                },
+                lableLine: {
+                    normal: {
+                        show: false
+                    },
+                    emphasis: {
+                        show: true
+                    }
+                },
+                data:[
+                    {value:10, name:'已交水费'},
+                    {value:5, name:'未交水费'}
+
+                ]
+
+            }
+
+
+        ]
+    };
+    ////////////////////////
+    var myChartfive = echarts.init(document.getElementById('five'));
+    /*var myChartTwo = echarts.init(document.getElementById('two'));*/
+    $(function () {
+
+        $.ajax({
+            cache : true,
+            type : "GET",
+            url : "/system/chart/get5",
+            async:false,
+            error : function(request) {
+                $.modal.alertError("系统错误");
+            },
+            success : function(dataRESULT) {
+                data5=dataRESULT;
+                var total=0;
+                for(var i=0;i<dataRESULT.length;i++){
+                    total+=dataRESULT[i].value;
+                }
+                option5.title.text="费用总计:"+total+"元";
+                option5.series[0].data=data5;
+                option5.series[1].data=data5;
+            }
+        });
+        myChartfive.setOption(option5);
+        myChartfive.resize();
+        /* myChartTwo.setOption(option);
+         myChartTwo.resize();*/
+    })
+
+</script>
+
+
+
+
+
+<!--////////以下是打印操作/////////////-->
+<script type="text/javascript">
+    var beforePrint = function() {
+        // console.log('Functionality to run before printing.');
+    };
+
+    var afterPrint = function() {
+        // console.log('Functionality to run after printing');
+        location.reload();
+    };
+
+    if (window.matchMedia) {
+        var mediaQueryList = window.matchMedia('print');
+        mediaQueryList.addListener(function(mql) {
+            if (mql.matches) {
+                beforePrint();
+            } else {
+                afterPrint();
+            }
+        });
+    }
+
+
+    window.onbeforeprint = beforePrint;
+    window.onafterprint = afterPrint;
+    function my_print()
+    {
+        var imgurl = myChart.getDataURL({
+            pixelRatio: 2,
+            backgroundColor: '#fff'
+        });
+        var imgurltwo = myChartTwo.getDataURL({
+            pixelRatio: 2,
+            backgroundColor: '#fff'
+        });
+        var imgurlthree = myChartTwo.getDataURL({
+            pixelRatio: 2,
+            backgroundColor: '#fff'
+        });
+        var imgurlfour = myChartTwo.getDataURL({
+            pixelRatio: 2,
+            backgroundColor: '#fff'
+        });
+        var imgurlfive = myChartTwo.getDataURL({
+            pixelRatio: 2,
+            backgroundColor: '#fff'
+        });
+        $("#showImg").attr("src",imgurl);
+        $("#showImg").css("display","block");
+        $("#showImgTwo").attr("src",imgurltwo);
+        $("#showImgTwo").css("display","block");
+        $("#showImgThree").attr("src",imgurlthree);
+        $("#showImgThree").css("display","block");
+        $("#showImgFour").attr("src",imgurlfour);
+        $("#showImgFour").css("display","block");
+        $("#showImgFive").attr("src",imgurlfive);
+        $("#showImgFive").css("display","block");
+        //直接调用浏览器打印功能
+        bdhtml=window.document.body.innerHTML;
+        //定义打印区域起始字符，根据这个截取网页局部内容
+        sprnstr="<!--startprint-->"; //打印区域开始的标记
+        eprnstr="<!--endprint-->";   //打印区域结束的标记
+        prnhtml=bdhtml.substr(bdhtml.indexOf(sprnstr)+17);
+        prnhtml=prnhtml.substring(0,prnhtml.indexOf(eprnstr));
+        //还原网页内容
+        window.document.body.innerHTML=prnhtml;
+        //开始打印
+        window.print();
+    }
+</script>
+
+</html>

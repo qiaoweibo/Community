@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改租房')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-qwbHouseRent-edit" th:object="${qwbHouseRent}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发布人姓名：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" th:field="*{name}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">租房信息：</label>
+				<div class="col-sm-8">
+					<input id="content" name="content" th:field="*{content}" class="form-control" type="text">
+				</div>
+			</div>
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">发布时间：</label>
+				<div class="col-sm-8">
+					<input id="time" name="time" th:field="*{time}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">备注：</label>
+				<div class="col-sm-8">
+					<input id="remark" name="remark" th:field="*{remark}" class="form-control" type="text">
+				</div>
+			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">电话：</label>
+				<div class="col-sm-8">
+					<input id="phone" name="phone" th:field="*{phone}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">邮箱：</label>
+				<div class="col-sm-8">
+					<input id="email" name="email" th:field="*{email}" class="form-control" type="text">
+				</div>
+			</div>
+
+
+			<div class="form-group">
+				<label class="col-sm-3 control-label">户型：</label>
+				<div class="col-sm-4">
+					<select class="input-sm form-control input-s-sm inline" name="roomType">
+						<option value="1室1厅1厨1卫">1室1厅1厨1卫</option>
+						<option value="2室1厅1厨1卫">2室1厅1厨1卫</option>
+						<option value="3室1厅1厨1卫">3室1厅1厨1卫</option>
+					</select>
+				</div>
+			</div>
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">户型(3室1厅1厨1卫：120平(加一个下拉选项框)）：</label>
+				<div class="col-sm-8">
+					<input id="roomType" name="roomType" th:field="*{roomType}" class="form-control" type="text">
+				</div>
+			</div>-->
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/qwbHouseRent";
+		$("#form-qwbHouseRent-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-qwbHouseRent-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

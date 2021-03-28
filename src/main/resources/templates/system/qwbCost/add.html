@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('新增費用')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-qwbCost-add">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">姓名：</label>
+				<div class="col-sm-8">
+					<input id="name" name="name" class="form-control" type="text">
+				</div>
+			</div>
+<!--==========================================================-->
+			<div class="form-group">
+				<label class="col-sm-3 control-label">房间号：</label>
+				<div class="col-sm-8">
+					<input readonly id="room" name="room" class="form-control" type="text">
+				</div>
+			</div>
+<!--==========================================================-->
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">发布时间：</label>
+				<div class="col-sm-8">
+					<input id="createDate" name="createDate" class="form-control" type="text">
+				</div>
+			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">电费：</label>
+				<div class="col-sm-8">
+					<input id="electricityCosts" name="electricityCosts" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">水费：</label>
+				<div class="col-sm-8">
+					<input id="waterCosts" name="waterCosts" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">燃气费：</label>
+				<div class="col-sm-8">
+					<input id="gasCosts" name="gasCosts" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">物业费：</label>
+				<div class="col-sm-8">
+					<input id="propertyCosts" name="propertyCosts" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">费用总计：</label>
+				<div class="col-sm-8">
+					<input id="total" name="total" class="form-control" type="text">
+				</div>
+			</div>
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">缴费时间：</label>
+				<div class="col-sm-8">
+					<input id="paymentTime" name="paymentTime" class="form-control" type="text">
+				</div>
+			</div>-->
+			<div class="form-group">	
+				<!--<label class="col-sm-3 control-label">状态：</label>-->
+				<div class="col-sm-8">
+					<!--最初的<input id="state" name="state" class="form-control" type="text" hidden="hidden" value="0">-->
+					<input id="state" name="state"  type="text" hidden="hidden" value="0">
+					<!--<input type="text" name="state" hidden="hidden" value="1"/>-->
+				</div>
+			</div>
+		</form>
+	</div>
+    <div th:include="include::footer"></div>
+
+
+
+
+    <script type="text/javascript">
+
+////////////////////////////////////////////////
+		var prefix = ctx + "system/qwbCost"
+//////////////////在单独增加收费时，输入用户名后直接显示出房间号//////////////////////////////
+		$('#name').blur(function () {
+			var name=$("#name").val();
+			$.ajax({
+				type : "POST",
+				url : prefix + "/room",
+				data : {
+					"name": name
+				},
+				async : false,
+				error : function(request) {
+					$.modal.alertError("系统错误");
+				},
+				success : function(data) {
+					$("#room").val(data)
+				}
+			});
+		});
+////////////////////////////////////////////////
+		$("#form-qwbCost-add").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/add", $('#form-qwbCost-add').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>

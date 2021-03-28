@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>发票打印</title>
+
+    <link th:href="@{/articleImport/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/articleImport/font-awesome/css/font-awesome.css}" rel="stylesheet">
+
+    <link th:href="@{/articleImport/css/animate.css}" rel="stylesheet">
+    <link th:href="@{/articleImport/css/style.css}" rel="stylesheet">
+
+</head>
+
+<body class="white-bg">
+                <div class="wrapper wrapper-content p-xl">
+                    <div class="ibox-content p-xl">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h1><strong>小区费用发票</strong><br></h1>
+                                    <h4>发票号码</h4>
+                                    <h4 class="text-navy">INV-000567F7-00</h4>
+                                    <address>
+                                        地址：河南省油田宛城区某街道<br>
+                                        邮编： 473405<br>
+                                        <abbr >电话:</abbr> (86) 1234-5678
+                                    </address>
+                                    <!--发票日期暂时固定，有空再弄(我现在都不知道什么是发票日期和截止日期)-->
+                                    <p>
+                                        <!--[[${#dates.format(qwbCost.paymentTime,'yyyy-MM-dd HH:mm:ss')}]]-->
+                                        <span> <strong>交费日期:</strong> [[${#dates.format(qwbCost.paymentTime,'yyyy-MM-dd HH:mm:ss')}]]</span><br/>
+                                        <!--<span><strong>截止日期:</strong> 2017.12.15</span>-->
+                                    </p>
+                                </div>
+
+
+                            </div>
+
+                            <div class="table-responsive m-t">
+                                <table class="table invoice-table">
+                                    <thead>
+                                    <tr>
+                                        <th>姓名</th>
+                                        <th>房间号</th>
+                                        <th>电费</th>
+                                        <th>水费</th>
+                                        <th>燃气费</th>
+                                        <th>物业费</th>
+                                        <th>总计</th>
+                                    </tr>
+                                    </thead>
+                     <!--以下是遍历数据库操作 -->
+                                    <tbody>
+                                    <tr >
+                                        <td th:text="${qwbCost.name}"></td>
+                                        <td th:text="${qwbCost.room}"></td>
+                                        <td th:text="${qwbCost.electricityCosts}"></td>
+                                        <td th:text="${qwbCost.waterCosts}"></td>
+                                        <td th:text="${qwbCost.gasCosts}"></td>
+
+                                        <td th:text="${qwbCost.propertyCosts}"></td>
+                                        <td th:text="${qwbCost.total}"></td>
+
+
+                                    </tr>
+                                    </tbody>
+                                </table>
+
+                            </div><!-- /table-responsive -->
+
+                            <!--<table class="table invoice-total">
+                                <tbody>
+                                <tr>
+                                    <td><strong>价格 :</strong></td>
+                                    <td>$1026.00</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>税收 :</strong></td>
+                                    <td>$235.98</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>总额 :</strong></td>
+                                    <td>$1261.98</td>
+                                </tr>
+                                </tbody>
+                            </table>-->
+                            <div class="well m-t"><strong>住户签名</strong>
+                                <!--用户签字-->
+                                [[${qwbCost.name}]]
+                            </div>
+                        </div>
+
+    </div>
+
+    <!-- Mainly scripts -->
+    <script th:src="@{/articleImport/js/jquery-3.1.1.min.js}"></script>
+    <script th:src="@{/articleImport/js/bootstrap.min.js}"></script>
+    <script th:src="@{/articleImport/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/articleImport/js/inspinia.js}"></script>
+
+
+
+ <!--PDF 打印 -->
+    <script type="text/javascript">
+        window.print();
+    </script>
+
+</body>
+
+</html>

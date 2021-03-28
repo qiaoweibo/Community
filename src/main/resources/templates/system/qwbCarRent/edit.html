@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+	<th:block th:include="include :: header('修改车位')" />
+</head>
+<body class="white-bg">
+    <div class="wrapper wrapper-content animated fadeInRight ibox-content">
+        <form class="form-horizontal m" id="form-qwbCarRent-edit" th:object="${qwbCarRent}">
+            <input id="id" name="id" th:field="*{id}"  type="hidden">
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车位号：</label>
+				<div class="col-sm-8">
+					<input id="carId" name="carId" th:field="*{carId}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">位置：</label>
+				<div class="col-sm-8">
+					<input id="space" name="space" th:field="*{space}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车位长度：</label>
+				<div class="col-sm-8">
+					<input id="length" name="length" th:field="*{length}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车位宽度：</label>
+				<div class="col-sm-8">
+					<input id="width" name="width" th:field="*{width}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">面积：</label>
+				<div class="col-sm-8">
+					<input id="area" name="area" th:field="*{area}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">车位租用的最大年限(年)：</label>
+				<div class="col-sm-8">
+					<input id="ageLimit" name="ageLimit" th:field="*{ageLimit}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">租金（年）：</label>
+				<div class="col-sm-8">
+					<input id="rentMoney" name="rentMoney" th:field="*{rentMoney}" class="form-control" type="text">
+				</div>
+			</div>
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">发布人的id：</label>
+				<div class="col-sm-8">
+					<input id="publishId" name="publishId" th:field="*{publishId}" class="form-control" type="text">
+				</div>
+			</div>-->
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发布人姓名：</label>
+				<div class="col-sm-8">
+					<input id="pName" name="pName" th:field="*{pName}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">发布人的电话号码：</label>
+				<div class="col-sm-8">
+					<input id="pNumber" name="pNumber" th:field="*{pNumber}" class="form-control" type="text">
+				</div>
+			</div>
+
+
+			<input id="describe" name="describe"  type="text" hidden="hidden" value="0">
+			<!--<div class="form-group">
+				<label class="col-sm-3 control-label">发布时间：</label>
+				<div class="col-sm-8">
+					<input id="pTime" name="pTime" th:field="*{pTime}" class="form-control" type="text">
+				</div>
+			</div>
+			<div class="form-group">	
+				<label class="col-sm-3 control-label">状态：（包括：未租用；已租用；未到期；已到期；续租？）：</label>
+				<div class="col-sm-8">
+					<input id="state" name="state" th:field="*{state}" class="form-control" type="text">
+				</div>
+			</div>-->
+		</form>
+    </div>
+    <div th:include="include::footer"></div>
+    <script type="text/javascript">
+		var prefix = ctx + "system/qwbCarRent";
+		$("#form-qwbCarRent-edit").validate({
+			rules:{
+				xxxx:{
+					required:true,
+				},
+			},
+			focusCleanup: true
+		});
+		
+		function submitHandler() {
+	        if ($.validate.form()) {
+	            $.operate.save(prefix + "/edit", $('#form-qwbCarRent-edit').serialize());
+	        }
+	    }
+	</script>
+</body>
+</html>
